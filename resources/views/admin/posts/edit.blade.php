@@ -9,33 +9,46 @@
       @csrf
       @method('PUT')
 
-      <div class="form-group">
-          <label for="title">Titolo</label>
-          <input type="string" class="form-control @error('title') is-invalid @enderror" id="title" name="title" placeholder="Inserisci il titolo" value="{{$post->title}}" required>
-          @error('title')
-              <div class="alert alert-danger">{{ $message }}</div>
-          @enderror
-      </div>
-      <div class="form-group">
-          <label for="content">Testo</label>
-          <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" placeholder="Inserisci testo" required>{{$post->content}}</textarea>
-          @error('content')
-              <div class="alert alert-danger">{{ $message }}</div>
-          @enderror
-      </div>
+        <div class="form-group">
+            <label for="title">Titolo</label>
+            <input type="string" class="form-control @error('title') is-invalid @enderror" id="title" name="title" placeholder="Inserisci il titolo" value="{{$post->title}}" required>
+            @error('title')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="form-group">
+            <label for="content">Testo</label>
+            <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" placeholder="Inserisci testo" required>{{$post->content}}</textarea>
+            @error('content')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
 
-      <div class="form-group">
-          <label>Categoria</label>
-          <select name="category_id" class="form-control">
-            <option value="">-- seleziona categoria --</option>
-            @foreach ($categories as $category)
-                <option value="{{$category->id}}" {{$category->id == old('category_id', $post->category_id) ? 'selected' : ''}}>{{$category->name}}</option>
+        <div class="form-group">
+            <label>Categoria</label>
+            <select name="category_id" class="form-control">
+                <option value="">-- seleziona categoria --</option>
+                @foreach ($categories as $category)
+                    <option value="{{$category->id}}" {{$category->id == old('category_id', $post->category_id) ? 'selected' : ''}}>{{$category->name}}</option>
+                @endforeach
+            </select>
+        </div>
+        @foreach ($categories as $category)
+        
+        @endforeach
+        <div class="form-group">
+            <label>Tags</label>
+            @foreach ($tags as $tag)
+                <div class="form-check">
+                    <input class="form-check-input" name="tags[]" type="checkbox" 
+                    value="{{$tag->id}}" id="{{$tag->slug}}" 
+                    {{$post->tags->contains($tag)? " checked" : ""}}>
+                    <label class="form-check-label" for="{{$tag->slug}}">
+                        {{$tag->name}}
+                    </label>
+                </div>
             @endforeach
-          </select>
-      </div>
-      @foreach ($categories as $category)
-       
-      @endforeach
+        </div>
       
       
       
